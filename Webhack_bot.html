@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wingo Predictor</title>
+  <style>
+    body { font-family: monospace; background: #111; color: #F7FF32; padding: 20px; }
+    .output { white-space: pre; }
+  </style>
+</head>
+<body>
+  <div class="output" id="log">🌀 NEXT PERIODE...</div>
+
+  <script>
+    const expiredDate = new Date("2025-05-31")
+    const output = document.getElementById("log");
+
+    function getDummyHistory() {
+      const history = [];
+      for (let i = 0; i < 15; i++) {
+        history.push(Math.floor(Math.random() * 10));
+      }
+      return history;
+    }
+
+    function predictSkorSelisih(data) {
+      const recent = data.map(x => x >= 5 ? "Big" : "Small");
+      const big = recent.filter(x => x === "Big").length;
+      const small = recent.filter(x => x === "Small").length;
+      const selisih = Math.abs(big - small);
+
+      if (selisih >= 5) {
+        return big < small ? "Big" : "Small";
+      } else if (selisih === 3) {
+        return big > small ? "Big" : "Small";
+      } else {
+        return recent[0] || "Big";
+      }
+    }
+
+    let lastPeriod = null;
+
+    function loop() {
+      const now = new Date();
+      if (now > expiredDate) {
+        output.innerText = `⛔️ Masa aktif script telah habis pada ${expiredDate.toLocaleString()}`;
+        return;
+      }
+
+      const second = now.getSeconds();
+      const minute = now.getMinutes();
+      const periode = Math.floor(now.getTime() / 60000);
+
+      if ((second === 0) && periode !== lastPeriod) {
+        const data = getDummyHistory();
+        const hasil = predictSkorSelisih(data);
+
+        output.innerText = `========================\n` +
+                           `All - WinGo - 1 Menit\n` +
+                           `Periode  : saat ini\n` +
+                           `Prediksi : ${hasil}\n` +
+                           `K³ Cukup\n` +
+                           `========================`;
+
+        lastPeriod = periode;
+      }
+
+      setTimeout(loop, 200);
+    }
+
+    loop();
+  </script>
+</body>
+</html>
