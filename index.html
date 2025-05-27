@@ -1,17 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wingo Predictor</title>
   <style>
-    body { font-family: monospace; background: #111; color: #F7FF32; padding: 20px; }
-    .output { white-space: pre; }
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #111;
+      color: #F7FF32;
+      font-family: monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background: #222;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .output {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
   </style>
 </head>
 <body>
-  <div class="output" id="log">🌀 NEXT PERIODE...</div>
+  <div class="container">
+    <div class="output" id="log">🌀 NEXT PERIODE...</div>
+  </div>
 
   <script>
-    const expiredDate = new Date("2025-05-31")
+    const expiredDate = new Date("2025-05-31");
     const output = document.getElementById("log");
 
     function getDummyHistory() {
@@ -47,19 +80,19 @@
       }
 
       const second = now.getSeconds();
-      const minute = now.getMinutes();
       const periode = Math.floor(now.getTime() / 60000);
 
-      if ((second === 0) && periode !== lastPeriod) {
+      if (second === 0 && periode !== lastPeriod) {
         const data = getDummyHistory();
         const hasil = predictSkorSelisih(data);
 
-        output.innerText = `========================\n` +
-                           `All - WinGo - 1 Menit\n` +
-                           `Periode  : saat ini\n` +
-                           `Prediksi : ${hasil}\n` +
-                           `K³ Cukup\n` +
-                           `========================`;
+        output.innerText =
+          `========================\n` +
+          `All - WinGo - 1 Menit\n` +
+          `Periode  : saat ini\n` +
+          `Prediksi : ${hasil}\n` +
+          `K³ Cukup\n` +
+          `========================`;
 
         lastPeriod = periode;
       }
