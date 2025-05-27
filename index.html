@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>Wingo Predictor</title>
   <style>
     * {
@@ -23,24 +23,21 @@
     }
 
     .container {
-      width: 90%;
-      max-width: 600px;
-      background: #222;
-      border-radius: 10px;
+      width: 95%;
+      max-width: 100%;
       padding: 5vw;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     }
 
     .output {
       white-space: pre-wrap;
       word-wrap: break-word;
-      font-size: calc(12px + 0.5vw);
-      line-height: 1.6;
+      font-size: 6vw;
+      line-height: 1.8;
     }
 
-    @media (max-width: 400px) {
+    @media (min-width: 768px) {
       .output {
-        font-size: 14px;
+        font-size: 24px;
       }
     }
   </style>
